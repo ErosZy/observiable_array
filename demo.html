@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>observiable array</title>
+  </head>
+  <body>
+    <ul id="list">
+    </ul>
+    <input type="text" id="addIpt" />
+    <input type="button" value="添加" id="addBtn" />
+    <script src="lib/observiable.js"></script>
+    <script>
+      var arr = [];
+      var list = document.getElementById('list');
+      
+      Observiable(arr, 'create', function (item, index) {
+        var li = document.createElement('li');
+        li.innerText = item;
+        li.id = 'li' + index;
+        list.appendChild(li);
+      });
+
+      Observiable(arr, 'delete', function (item, index) {
+        var li = document.getElementById('li' + index);
+        li.parentNode.removeChild(li);
+      });
+
+      var addBtn = document.getElementById('addBtn');
+      addBtn.addEventListener('click', function () {
+        var addIpt = document.getElementById('addIpt');
+        var val = addIpt.value;
+        if (val == '') { return ; }
+        arr.push(val);
+        addIpt.value = '';
+      });
+    </script>
+  </body>
+</html>
